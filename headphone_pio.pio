@@ -1,0 +1,47 @@
+;
+; Copyright (c) 2022 Adrian Siekierka
+;
+; ExtFriend is free software: you can redistribute it and/or modify it under
+; the terms of the GNU General Public License as published by the Free
+; Software Foundation, either version 3 of the License, or (at your option)
+; any later version.
+;
+; ExtFriend is distributed in the hope that it will be useful, but WITHOUT
+; ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+; FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+; more details.
+;
+; You should have received a copy of the GNU General Public License along
+; with ExtFriend. If not, see <https://www.gnu.org/licenses/>. 
+;
+
+.program headphone_pio
+
+    wait 1 pin 1
+loop:
+    set x, 31
+    wait 0 pin 1
+sample:
+    wait 1 pin 2
+    in pins, 1
+    wait 0 pin 2
+    jmp x-- sample
+    jmp loop
+
+% c-sdk {
+#include "hardware/clocks.h"
+#include "hardware/gpio.h"
+
+static inline void headphone_pio_program_init(PIO pio, uint sm, uint offset, uint pin) {
+    pio_sm_set_consecutive_pindirs(pio, sm, pin, 3, false);
+
+    pio_sm_config c = headphone_pio_program_get_default_config(offset);
+    sm_config_set_in_pins(&c, pin);
+    sm_config_set_in_shift(&c, false, true, 32);
+    sm_config_set_fifo_join(&c, PIO_FIFO_JOIN_RX);
+    float div = (float)clock_get_hz(clk_sys) / (768000 * 12);
+    sm_config_set_clkdiv(&c, div);
+    
+    pio_sm_init(pio, sm, offset, &c);
+}
+%}
