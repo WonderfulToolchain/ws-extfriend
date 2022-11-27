@@ -1,9 +1,9 @@
 # ExtFriend
 
-ExtFriend is an USB adapter for the WonderSwan's EXT port based on the RP2040 chip and the Raspberry Pi Pico board, providing the following features at a low cost:
+ExtFriend is a USB adapter for the WonderSwan's EXT port based on the RP2040 chip and the Raspberry Pi Pico board, providing the following features at a low cost:
 
-* An USB serial port communicating with the WonderSwan at 9600 and 38400 baud,
-* An USB audio device allowing digital stereo audio capture from the WonderSwan.
+* A USB serial port communicating with the WonderSwan at 9600 and 38400 baud,
+* A USB audio device allowing digital stereo audio capture from the WonderSwan.
 
 Special thanks to [BluRaf](https://mastodon.sdf.org/@BluRaf) for providing support and advice through my first journey into TinyUSB lands.
 
