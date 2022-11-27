@@ -7,6 +7,10 @@ ExtFriend is an USB adapter for the WonderSwan's EXT port based on the RP2040 ch
 
 Special thanks to [BluRaf](https://mastodon.sdf.org/@BluRaf) for providing support and advice through my first journey into TinyUSB lands.
 
+## Tips
+
+* If you mute the USB audio device, the WonderSwan will consider the headphones as disconnected, re-enabling the internal speaker.
+
 ## Build Instructions
 
 * Copy `pico_sdk_import.cmake` from your Pico-SDK installation to the repository's root.
