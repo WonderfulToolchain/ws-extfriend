@@ -136,11 +136,11 @@ uint8_t const * tud_descriptor_configuration_cb(uint8_t index)
 char const* string_desc_arr [] =
 {
     (const char[]) { 0x09, 0x04 }, 	// 0: is supported language is English (0x0409)
-    "Shinonome Labs",                   	// 1: Manufacturer
-    "Memphis",    		// 2: Product
-    "694202137",                      	// 3: Serials, should use chip ID
+    "asie",	                   	// 1: Manufacturer
+    "ExtFriend", 	   		// 2: Product
+    "12345678",                      	// 3: Serials, should use chip ID
     "UAC2",                 	 	// 4: Audio Interface
-    "Memphis CDC"               // 5: CDC Interface
+    "ExtFriend CDC"              	 // 5: CDC Interface
 };
 
 static uint16_t _desc_str[32];
