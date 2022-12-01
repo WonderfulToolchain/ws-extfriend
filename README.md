@@ -5,6 +5,8 @@ ExtFriend is a USB adapter for the WonderSwan's EXT port based on the RP2040 chi
 * A USB serial port communicating with the WonderSwan at 9600 and 38400 baud,
 * A USB audio device allowing digital stereo audio capture from the WonderSwan.
 
+Both features can be active simultaneously - for example, this could allow one to control a WonderSwan as an audio synthesizer.
+
 Special thanks to [BluRaf](https://mastodon.sdf.org/@BluRaf) for providing support and advice through my first journey into TinyUSB lands.
 
 ## Tips
