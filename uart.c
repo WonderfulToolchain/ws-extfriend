@@ -22,6 +22,7 @@
 #include "hardware/pio.h"
 #include "hardware/uart.h"
 #include "info.h"
+#include "usb.h"
 
 void ws_uart_init(void) {
     uart_init(uart0, 9600);
@@ -33,4 +34,8 @@ void ws_uart_init(void) {
     gpio_set_function(MEMPHIS_WS_UART_RX_PIN, GPIO_FUNC_UART);
     gpio_set_inover(MEMPHIS_WS_UART_RX_PIN, GPIO_OVERRIDE_INVERT);
     gpio_set_outover(MEMPHIS_WS_UART_TX_PIN, GPIO_OVERRIDE_INVERT);
+
+    irq_set_exclusive_handler(UART0_IRQ, usb_uart_rx);
+    irq_set_enabled(UART0_IRQ, true);
+    uart_set_irq_enables(uart0, true, false);
 }

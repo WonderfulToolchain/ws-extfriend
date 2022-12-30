@@ -23,4 +23,10 @@
 void ws_headphone_init(void);
 void ws_headphone_set_active(bool active);
 
+extern uint16_t headphone_buffer[MEMPHIS_WS_HEADPHONE_BUFFER_ENTRIES * MEMPHIS_WS_HEADPHONE_BUFFER_SAMPLES];
+extern volatile uint32_t headphone_buffer_idx;
+extern volatile uint32_t headphone_buffer_idx_usb;
+extern uint32_t headphone_dma_channel;
+extern volatile bool headphone_active;
+
 #endif /* __HEADPHONE_H__ */

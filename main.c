@@ -17,6 +17,7 @@
 
 #include <stdio.h>
 #include "config.h"
+#include "pico/multicore.h"
 #include "pico/stdlib.h"
 #include "hardware/pio.h"
 #include "hardware/uart.h"
@@ -26,6 +27,12 @@
 #include "usb.h"
 
 #include "tusb.h"
+
+void core_tud(void) {
+    while (true) {
+        tud_task();
+    }
+}
 
 int main() {
     led_init();
@@ -41,10 +48,8 @@ int main() {
     ws_headphone_init();
     ws_uart_init();
 
-    while (true) {
-        tud_task();
-        usb_uart_task();
-    }
+    multicore_launch_core1(core_tud);
+    while (true) {}
 
     return 0;
 }

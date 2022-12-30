@@ -57,6 +57,7 @@ target_include_directories(extfriend PRIVATE
 target_link_libraries(extfriend
         hardware_dma
         hardware_pio
+	pico_multicore
         tinyusb_device tinyusb_board
         )
 

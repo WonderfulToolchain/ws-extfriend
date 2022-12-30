@@ -70,10 +70,6 @@ bool mute[CFG_TUD_AUDIO_FUNC_1_N_CHANNELS_TX + 1]; 				          // +1 for maste
 int16_t volume[CFG_TUD_AUDIO_FUNC_1_N_CHANNELS_TX + 1]; 					// +1 for master channel 0
 uint32_t sampFreq;
 uint8_t clkValid;
-extern uint16_t headphone_buffer[MEMPHIS_WS_HEADPHONE_BUFFER_ENTRIES * MEMPHIS_WS_HEADPHONE_BUFFER_SAMPLES];
-extern volatile uint32_t headphone_buffer_idx;
-extern volatile uint32_t headphone_buffer_idx_usb;
-extern uint32_t headphone_dma_channel;
 
 // Range states
 audio_control_range_2_n_t(1) volumeRng[CFG_TUD_AUDIO_FUNC_1_N_CHANNELS_TX+1]; 			// Volume range state
@@ -324,7 +320,8 @@ bool tud_audio_tx_done_pre_load_cb(uint8_t rhport, uint8_t itf, uint8_t ep_in, u
   (void) ep_in;
   (void) cur_alt_setting;
 
-  while (headphone_buffer_idx == headphone_buffer_idx_usb) {}
+  int i = 50000;
+  while (i > 0 && headphone_buffer_idx == headphone_buffer_idx_usb) i--;
   tud_audio_write(&headphone_buffer[MEMPHIS_WS_HEADPHONE_BUFFER_SAMPLES * headphone_buffer_idx_usb], CFG_TUD_AUDIO_EP_SZ_IN); 
   headphone_buffer_idx_usb = (headphone_buffer_idx_usb + 1) % MEMPHIS_WS_HEADPHONE_BUFFER_ENTRIES;  
 
@@ -357,9 +354,8 @@ void tud_cdc_line_coding_cb(uint8_t itf, cdc_line_coding_t const* p_line_coding)
   uart_set_baudrate(uart0, p_line_coding->bit_rate >= 19200 ? 38400 : 9600);
 }
 
-// TODO: This might benefit from being rewritten using interrupts.
-void usb_uart_task(void) {
-  if (tud_cdc_available()) {
+void tud_cdc_rx_cb(uint8_t itf) {
+  while (tud_cdc_available()) {
     char data[16];
     int data_read = tud_cdc_read(data, sizeof(data));
     if (data_read > 0) {
@@ -367,7 +363,10 @@ void usb_uart_task(void) {
       uart_write_blocking(uart0, data, data_read);
     }
   }
-  if (uart_is_readable(uart0)) {
+}
+
+void usb_uart_rx(void) {
+  while (uart_is_readable(uart0)) {
     char data[16];
     int data_read = 0;
     do {
@@ -388,7 +387,7 @@ void usb_init(void) {
 
     sampleFreqRng.wNumSubRanges = 1;
     sampleFreqRng.subrange[0].bMin = 24000;
-    sampleFreqRng.subrange[0].bMax = 24000;   
+    sampleFreqRng.subrange[0].bMax = 24000;
     sampleFreqRng.subrange[0].bRes = 0;
 
     tusb_init();

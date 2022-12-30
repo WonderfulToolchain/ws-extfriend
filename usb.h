@@ -22,6 +22,7 @@
 
 void usb_init(void);
 void usb_uart_task(void);
+void usb_uart_rx(void);
 void usb_audio_dma_callback(void);
 
 #endif /* __USB_H__ */

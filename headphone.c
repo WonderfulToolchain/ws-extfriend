@@ -31,10 +31,10 @@ uint16_t headphone_buffer[MEMPHIS_WS_HEADPHONE_BUFFER_ENTRIES * MEMPHIS_WS_HEADP
 volatile uint32_t headphone_buffer_idx;
 volatile uint32_t headphone_buffer_idx_usb;
 uint32_t headphone_dma_channel;
-static bool last_headphone_active;
+volatile bool headphone_active;
 
 void ws_headphone_init(void) {
-    last_headphone_active = false;
+    headphone_active = false;
     gpio_deinit(MEMPHIS_WS_HDPN_DETECT_PIN);
 
     uint offset = pio_add_program(pio0, &headphone_pio_program);
@@ -76,7 +76,7 @@ void ws_headphone_init(void) {
 }
 
 void ws_headphone_set_active(bool active) {
-    if (active != last_headphone_active) {
+    if (active != headphone_active) {
 #ifdef MEMPHIS_DEBUG
         printf("ef: headphone -> %d\n", active ? 0 : 1);
 #endif
@@ -87,6 +87,6 @@ void ws_headphone_set_active(bool active) {
         } else {
             gpio_deinit(MEMPHIS_WS_HDPN_DETECT_PIN);
         }
-        last_headphone_active = active;
+        headphone_active = active;
     }
 }
