@@ -33,8 +33,7 @@ Special thanks to [BluRaf](https://mastodon.sdf.org/@BluRaf) for providing suppo
     * EXT HDPN_SDAT - Pico pin 4 (GP3)
     * EXT /HDPN_DETECT - Pico pin 3 (GP2)
 
-As the HDMI connector is *sort of* compatible with an EXT port, it would be interesting to see if an HDMI breakout board could be used to faciliate a
-solderless DIY connection - unfortunately, as my SwanCrystal already has a breakout header (and I prefer it that way), I wasn't able to test this.
+If you don't have an EXT port plug or cable handy, you can use an HDMI breakout board. An example instruction guide is provided [here](https://twitter.com/peca_port0/status/1631569109912817667) (in Japanese), for a $2 AliExpress board.
 
 ## License
 
