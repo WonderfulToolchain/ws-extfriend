@@ -23,15 +23,15 @@ Special thanks to [BluRaf](https://mastodon.sdf.org/@BluRaf) for providing suppo
 ![ExtFriend plugged into a SwanCrystal using a soldered header.](https://img.asie.pl/PTC3.jpg)
 
 * Flash the program to the Pico: for example, `picotool load -v -x extfriend.uf2`
-* Connect the Raspberry Pi Pico to [the WonderSwan's EXT port](http://daifukkat.su/docs/wsman/#pinout_extport) as follows:
+* Connect the Raspberry Pi Pico to [the WonderSwan's EXT port](http://daifukkat.su/docs/wsman/#pinout_extport). The default build of ExtFriend uses seven consecutive Pi Pico pins, as follows:
   * EXT GND - Pico GND (for example pin 3)
   * EXT SER_MOSI - Pico pin 2 (GP1)
   * EXT SER_MISO - Pico pin 1 (GP0)
   * If you want to use digital audio capture:
     * EXT HDPN_BCLK - Pico pin 7 (GP5)
     * EXT HDPN_LRCK - Pico pin 6 (GP4)
-    * EXT HDPN_SDAT - Pico pin 4 (GP3)
-    * EXT /HDPN_DETECT - Pico pin 3 (GP2)
+    * EXT HDPN_SDAT - Pico pin 5 (GP3)
+    * EXT /HDPN_DETECT - Pico pin 4 (GP2)
 
 If you don't have an EXT port plug or cable handy, you can use an HDMI breakout board. An example instruction guide is provided [here](https://twitter.com/peca_port0/status/1631569109912817667) (in Japanese), for a $2 AliExpress board.
 
